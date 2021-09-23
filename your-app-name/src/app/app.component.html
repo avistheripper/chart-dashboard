@@ -1,0 +1,71 @@
+<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+  <div class="flex items-center flex-shrink-0 mr-6">
+    <svg
+      class="fill-current h-8 w-8 mr-2"
+      width="54"
+      height="54"
+      viewBox="0 0 54 54"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
+      />
+    </svg>
+    <span class="font-semibold text-xl tracking-tight">Dashboard</span>
+  </div>
+</nav>
+<ol class="ml-5">
+  <li>Pick a range of dates</li>
+  <li>Choose active sensor</li>
+  <li>Add a chart</li>
+</ol>
+<div class="flex flex-row w-full bg-light-500">
+  <div class="flex flex-row p-8">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+        <input #dateRangeStart matStartDate formControlName="start" placeholder="Start date" />
+        <input
+          #dateRangeEnd
+          matEndDate
+          formControlName="end"
+          placeholder="End date"
+          (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+
+      <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+      <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="pt-10">
+    <p>Available sensors data</p>
+    <mat-radio-group [(ngModel)]="activeSensor" aria-label="Select an option">
+      <mat-radio-button class="ml-3" *ngFor="let s of sensorsMock" [value]="s.type">{{ s.type }}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</div>
+
+<p class="m-3">
+  Add a chart
+  <button (click)="openDialog()" color="primary" mat-icon-button aria-label="Add chart icon">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+</p>
+<p class="m-3">
+  Remove all charts
+<button (click)="cleanCharts()" color="primary" mat-icon-button aria-label="Add chart icon">
+  <mat-icon>delete</mat-icon>
+</button>
+</p>
+
+<ng-container *ngIf="chartsList.length">
+  <div class="flex flex-row flex-wrap">
+    <app-demo-chart *ngFor="let chart of chartsList" [chartConfig]="chart.chartData"></app-demo-chart>
+  </div>
+</ng-container>
+
+<ngx-loading-bar [includeSpinner]="false" color="red"></ngx-loading-bar>
+<!-- <router-outlet></router-outlet> -->
