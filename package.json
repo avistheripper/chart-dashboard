@@ -21,23 +21,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "prepare": "husky install",
     "start": "ng serve",
     "build": "ng build --base-href ./ ",
     "watch": "ng build --watch --configuration development",
-    "prod-test": "npm run final-build && serve -s dist/",
-    "source": "ng build --sourceMap=true --namedChunks=true && ./node_modules/.bin/source-map-explorer dist/*.js",
-    "webpack-analyze": "ng build --sourceMap=true --namedChunks=true --stats-json && ./node_modules/.bin/webpack-bundle-analyzer dist/stats.json",
     "purgecss": "node run-purgecss.js",
     "final-build": "npm run build && npm run purgecss",
-    "test": "ng test",
-    "test:coverage": "ng test --coverage",
-    "lint": "ng lint",
-    "e2e": "ng run ng-new-app:cypress-open",
-    "e2e:ci": "ng run ng-new-app:cypress-run",
-    "prettier": "prettier --config ./.prettierrc --write \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",
-    "prettier:verify": "prettier --config ./.prettierrc --check \"src/{app,environments}/**/*{.ts,.html,.scss,.json}\"",
-    "prettier:staged": "pretty-quick --staged"
+    "test": "ng test"
   },
   "bin": {
     "ng-new-app": "./bin/generate-app.js"
